@@ -20,7 +20,18 @@ def get_date(date: str) -> str:
     Функция, которая выводит дату в верном формате ДД.ММ.ГГГГ
     """
     date_part = date.split("T")[0]
-    year = date_part.split("-")[0]
-    month = date_part.split("-")[1]
-    day = date_part.split("-")[2]
-    return f"{day}.{month}.{year}"
+    if date_part[4] == "-":
+        year = date_part.split("-")[0]
+        month = date_part.split("-")[1]
+        day = date_part.split("-")[2]
+
+        if int(month) <= 12 and int(day) <= 31:
+            return f"{day}.{month}.{year}"
+
+        else:
+            raise ValueError("Неверная дата")
+
+    else:
+        raise ValueError("Неверный формат даты")
+
+

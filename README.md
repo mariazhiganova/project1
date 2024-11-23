@@ -14,6 +14,14 @@ git clone git@github.com:mariazhiganova/project1.git
 poetry install
 ```
 
+## Тестирование 
+Проект покрыт юнит-тестами Pytest
+
+Чтобы запустить тесты с оценкой покрытия выполните команду
+```commandline
+poetry run pytest --cov
+```
+
 ## Команда проекта
 
 - **Мария Жиганова** - Junior Backend-разработчик (Python)
