@@ -6,7 +6,7 @@ def filter_by_currency(info_list, currency):
     first_item = next(result_by_currency, None)
 
     if first_item is None:
-        yield "Операции в заданной валюте не найдены"
+        raise ValueError("Операции в заданной валюте не найдены")
 
     yield first_item
     yield from result_by_currency
@@ -17,7 +17,8 @@ def transaction_descriptions(info_list):
     Функция, выводящая описания операций из списка
     """
     if len(info_list) == 0:
-        yield "Нет транзакций"
+        raise ValueError("Нет транзакций")
+
     for x in info_list:
         yield x["description"]
 
@@ -26,15 +27,21 @@ def card_number_generator(start, stop):
     """
     Функция, генерирующая номера банковских карт в заданном 16-значном формате
     """
-    for number in range(start, stop + 1):
+    if start > stop:
 
-        number_str = str(number)
+        raise ValueError("Ошибка: Start не должен превышать Stop")
 
-        if len(str(number)) < 16:
-            card_number_not_formatted = "0" * (16 - len(str(number))) + str(number)
-        else:
-            card_number_not_formatted = number_str
+    else:
 
-        card_number = f"{card_number_not_formatted[:4]} {card_number_not_formatted[4:8]} {card_number_not_formatted[8:12]} {card_number_not_formatted[12:]}"
+        for number in range(start, stop + 1):
 
-        yield card_number
+            number_str = str(number)
+
+            if len(str(number)) < 16:
+                card_number_not_formatted = "0" * (16 - len(str(number))) + str(number)
+            else:
+                card_number_not_formatted = number_str
+
+            card_number = f"{card_number_not_formatted[:4]} {card_number_not_formatted[4:8]} {card_number_not_formatted[8:12]} {card_number_not_formatted[12:]}"
+
+            yield card_number
