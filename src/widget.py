@@ -33,5 +33,3 @@ def get_date(date: str) -> str:
 
     else:
         raise ValueError("Неверный формат даты")
-
-
