@@ -30,8 +30,18 @@ def log(file_name: str | None = None) -> Callable:
                     print(f"Время работы функции: {func_time} сек")
 
             except Exception as er:
+                stop = time.time()
+                func_time = stop - start
+                if file_name is not None:
+                    os.makedirs(os.path.dirname(file_name), exist_ok=True)
+                    with open(file_name, "a", encoding="utf-8") as file:
+                        file.write(f"Функция: {func.__name__} - ERROR: {er} with inputs: {args}, {kwargs}")
+                        file.write(f"Время работы функции: {func_time}")
+
+                else:
+                    print(f"Функция: {func.__name__} - ERROR: {er} with inputs: {args}, {kwargs}")
+
                 result = "Произошла ошибка"
-                print(f"Функция: {func.__name__} - ERROR: {er} with inputs: {args}, {kwargs}")
 
             return result
 

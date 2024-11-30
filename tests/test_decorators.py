@@ -31,6 +31,5 @@ def test_log_invalid(capsys):
 
     captured = capsys.readouterr()
     assert (
-        captured.out
-        == """Функция: my_test_func - ERROR: can only concatenate str (not "int") to str with inputs: ('a', 2), {}\n"""
+            captured.out == """Функция: my_test_func - ERROR: can only concatenate str (not "int") to str with inputs: ('a', 2), {}\n"""
     )
