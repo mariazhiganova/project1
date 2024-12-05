@@ -46,4 +46,3 @@ def test_get_date_invalid_else(dates_invalid):
         get_date(dates_invalid)
 
     assert str(exc_info.value) == "Неверная дата"
-
