@@ -31,7 +31,7 @@ def test_filter_by_invalid_currency(transactions_list_invalid, currency="USD"):
     assert str(exc_info.value) == "Операции в заданной валюте не найдены"
 
 
-def test_filter_by_invalid_currency_empty(transactions_list_empty, currency="USD"):
+def test_filter_by_invalid_currency_empty(transactions_list_empty):
     with pytest.raises(ValueError) as exc_info:
         list(filter_by_currency(transactions_list_empty, "USD"))
     assert str(exc_info.value) == "Операции в заданной валюте не найдены"
