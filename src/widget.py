@@ -12,7 +12,8 @@ def mask_account_card(card_info: str) -> str:
 
     else:
 
-        return f"{" ".join(info_list[:-1])} {get_mask_card_number(info_list[-1])}"
+        joined_info = " ".join(info_list[:-1])
+        return f"{joined_info} {get_mask_card_number(info_list[-1])}"
 
 
 def get_date(date: str) -> str:

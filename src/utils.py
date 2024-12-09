@@ -15,11 +15,7 @@ def get_transaction_data(json_file: Optional[str] = None) -> list:
 
                     return transactions_list
 
-                else:
-                    return []
-
-        else:
-            return []
+        return []
 
     except json.JSONDecodeError:
         return []
@@ -29,4 +25,4 @@ def get_transaction_data(json_file: Optional[str] = None) -> list:
 
 
 if __name__ == "__main__":
-    get_transaction_data("C:/Users/user/my_proj/my_project1/data/operations.json")
+    print(get_transaction_data("C:/Users/user/my_proj/my_project1/data/operations.json"))

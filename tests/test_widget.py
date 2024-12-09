@@ -39,7 +39,7 @@ def test_get_date_invalid(date_invalid):
     [
         ("2024-13-12T02:26:18.671407"),
         ("2024-03-32T02:26:18.671407"),
-    ],
+    ]
 )
 def test_get_date_invalid_else(dates_invalid):
     with pytest.raises(ValueError) as exc_info:
