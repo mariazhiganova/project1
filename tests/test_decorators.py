@@ -2,7 +2,7 @@ from src.decorators import log
 
 
 def test_log():
-    @log(file_name="logs/log.txt")
+    @log()
     def my_test_func(a, b):
         return a + b
 
@@ -31,5 +31,6 @@ def test_log_invalid(capsys):
 
     captured = capsys.readouterr()
     assert (
-            captured.out == """Функция: my_test_func - ERROR: can only concatenate str (not "int") to str with inputs: ('a', 2), {}\n"""
+        captured.out
+        == """Функция: my_test_func - ERROR: can only concatenate str (not "int") to str with inputs: ('a', 2), {}\n"""
     )
