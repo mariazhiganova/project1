@@ -9,7 +9,7 @@ def get_transaction_data(json_file: Optional[str] = None) -> list:
     и возвращает список словарей с данными о финансовых транзакциях.
     """
     logger = logging.getLogger("utils")
-    logger.setLevel(logging.INFO)
+    logger.setLevel(logging.DEBUG)
     file_handler = logging.FileHandler("../logs/utils.log", mode="w", encoding="utf-8")
     file_formatter = logging.Formatter("%(asctime)s - %(filename)s - %(levelname)s: %(message)s")
     file_handler.setFormatter(file_formatter)
