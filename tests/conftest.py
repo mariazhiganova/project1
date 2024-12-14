@@ -226,3 +226,54 @@ def transaction_for_conversion_invalid():
         "from": "Счет 96008924215040031147",
         "to": "Счет 30377212495530283001",
     }
+
+
+@pytest.fixture
+def csv_data_result():
+    return [
+        {
+            "id": "650703",
+            "state": "EXECUTED",
+            "date": "2023-09-05T11:30:32Z",
+            "amount": "16210",
+            "currency_name": "Sol",
+            "currency_code": "PEN",
+            "from": "Счет 58803664561298323391",
+            "to": "Счет 39745660563456619397",
+            "description": "Перевод организации",
+        },
+        {
+            "id": "3598919",
+            "state": "EXECUTED",
+            "date": "2020-12-06T23:00:58Z",
+            "amount": "29740",
+            "currency_name": "Peso",
+            "currency_code": "COP",
+            "from": "Discover 3172601889670065",
+            "to": "Discover 0720428384694643",
+            "description": "Перевод с карты на карту",
+        },
+    ]
+
+
+@pytest.fixture
+def excel_data():
+    return {
+        "id": [650703, 3598919],
+        "state": ["EXECUTED", "EXECUTED"],
+        "date": ["2023-09-05T11:30:32Z;16210", "2020-12-06T23:00:58Z;29740"],
+        "amount": ["Sol", "PEN"],
+    }
+
+
+@pytest.fixture
+def excel_data_result():
+    return [
+        {"id": 650703, "state": "EXECUTED", "date": "2023-09-05T11:30:32Z;16210", "amount": "Sol"},
+        {"id": 3598919, "state": "EXECUTED", "date": "2020-12-06T23:00:58Z;29740", "amount": "PEN"},
+    ]
+
+
+@pytest.fixture
+def excel_data_invalid():
+    return [1, 2, 3]
