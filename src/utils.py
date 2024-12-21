@@ -48,4 +48,4 @@ def get_transaction_data(json_file: Optional[str] = None) -> list:
 
 
 if __name__ == "__main__":
-    print(get_transaction_data("C:/Users/user/my_proj/my_project1/data/operations.json"))
+    get_transaction_data("../data/operations.json")
