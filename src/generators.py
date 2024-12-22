@@ -1,6 +1,3 @@
-from sys import exc_info
-
-
 def filter_by_currency(info_list, currency):
     """
     Функция, находящая операции в заданной валюте
