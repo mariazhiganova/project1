@@ -25,16 +25,16 @@ def test_filter_by_currency(transactions_list, currency="USD"):
     }
 
 
-def test_filter_by_invalid_currency(transactions_list_invalid, currency="USD"):
-    with pytest.raises(ValueError) as exc_info:
-        list(filter_by_currency(transactions_list_invalid, "USD"))
-    assert str(exc_info.value) == "Операции в заданной валюте не найдены"
+def test_filter_by_invalid_currency(transactions_list_invalid):
+    assert list(filter_by_currency(transactions_list_invalid, "USD")) == []
+
+
+def test_filter_by_currency_without_key(transactions_list_without_key):
+    assert list(filter_by_currency(transactions_list_without_key, "USD")) == []
 
 
 def test_filter_by_invalid_currency_empty(transactions_list_empty):
-    with pytest.raises(ValueError) as exc_info:
-        list(filter_by_currency(transactions_list_empty, "USD"))
-    assert str(exc_info.value) == "Операции в заданной валюте не найдены"
+    assert list(filter_by_currency(transactions_list_empty, "USD")) == []
 
 
 def test_transaction_descriptions(transactions_list):
@@ -45,30 +45,28 @@ def test_transaction_descriptions(transactions_list):
 
 
 def test_transaction_descriptions_empty(transactions_list_empty):
-    with pytest.raises(ValueError) as exc_info:
-        list(transaction_descriptions(transactions_list_empty))
-    assert str(exc_info.value) == "Нет транзакций"
+    assert list(transaction_descriptions(transactions_list_empty)) == []
 
 
 @pytest.mark.parametrize(
     "start, stop, expected_numbers",
     [
         (
-            1,
-            11,
-            [
-                "0000 0000 0000 0001",
-                "0000 0000 0000 0002",
-                "0000 0000 0000 0003",
-                "0000 0000 0000 0004",
-                "0000 0000 0000 0005",
-                "0000 0000 0000 0006",
-                "0000 0000 0000 0007",
-                "0000 0000 0000 0008",
-                "0000 0000 0000 0009",
-                "0000 0000 0000 0010",
-                "0000 0000 0000 0011",
-            ],
+                1,
+                11,
+                [
+                    "0000 0000 0000 0001",
+                    "0000 0000 0000 0002",
+                    "0000 0000 0000 0003",
+                    "0000 0000 0000 0004",
+                    "0000 0000 0000 0005",
+                    "0000 0000 0000 0006",
+                    "0000 0000 0000 0007",
+                    "0000 0000 0000 0008",
+                    "0000 0000 0000 0009",
+                    "0000 0000 0000 0010",
+                    "0000 0000 0000 0011",
+                ],
         )
     ],
 )

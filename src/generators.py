@@ -1,15 +1,24 @@
+from sys import exc_info
+
+
 def filter_by_currency(info_list, currency):
     """
     Функция, находящая операции в заданной валюте
     """
     result_by_currency = (x for x in info_list if x["operationAmount"]["currency"]["code"] == currency)
-    first_item = next(result_by_currency, None)
 
-    if first_item is None:
-        raise ValueError("Операции в заданной валюте не найдены")
+    try:
 
-    yield first_item
-    yield from result_by_currency
+        first_item = next(result_by_currency, None)
+
+        if first_item is None:
+            return []
+
+        yield first_item
+        yield from result_by_currency
+
+    except KeyError:
+        return []
 
 
 def transaction_descriptions(info_list):
@@ -17,7 +26,7 @@ def transaction_descriptions(info_list):
     Функция, выводящая описания операций из списка
     """
     if len(info_list) == 0:
-        raise ValueError("Нет транзакций")
+        return []
 
     for x in info_list:
         yield x["description"]
