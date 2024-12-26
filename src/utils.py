@@ -2,6 +2,8 @@ import json
 import logging
 from typing import Optional
 
+from settings import LOG_UTILS_PATH
+
 
 def get_transaction_data(json_file: Optional[str] = None) -> list:
     """
@@ -10,7 +12,7 @@ def get_transaction_data(json_file: Optional[str] = None) -> list:
     """
     logger = logging.getLogger("utils")
     logger.setLevel(logging.DEBUG)
-    file_handler = logging.FileHandler("../logs/utils.log", mode="w", encoding="utf-8")
+    file_handler = logging.FileHandler(LOG_UTILS_PATH, mode="w", encoding="utf-8")
     file_formatter = logging.Formatter("%(asctime)s - %(filename)s - %(levelname)s: %(message)s")
     file_handler.setFormatter(file_formatter)
     logger.addHandler(file_handler)
@@ -36,16 +38,12 @@ def get_transaction_data(json_file: Optional[str] = None) -> list:
         logger.error("Файл отсутствует")
         return []
 
+    except FileNotFoundError:
+        logger.error(f"Файл по пути {json_file} не найден.")
+        return []
+
     except json.JSONDecodeError as ex:
         logger.error("Данные из json-файла не соответствует синтаксису JSON или содержат ошибочные данные")
         logger.error(f"Ошибка {ex}")
 
         return []
-
-    except FileNotFoundError:
-        logger.error(f"Файл по пути {json_file} не найден.")
-        return []
-
-
-if __name__ == "__main__":
-    get_transaction_data("../data/operations.json")

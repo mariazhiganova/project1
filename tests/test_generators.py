@@ -3,7 +3,7 @@ import pytest
 from src.generators import card_number_generator, filter_by_currency, transaction_descriptions
 
 
-def test_filter_by_currency(transactions_list, currency="USD"):
+def test_filter_by_currency(transactions_list):
     gen = filter_by_currency(transactions_list, "USD")
     assert next(gen) == {
         "id": 939719570,
@@ -25,16 +25,22 @@ def test_filter_by_currency(transactions_list, currency="USD"):
     }
 
 
-def test_filter_by_invalid_currency(transactions_list_invalid, currency="USD"):
+def test_filter_by_invalid_currency(transactions_list_invalid):
     with pytest.raises(ValueError) as exc_info:
         list(filter_by_currency(transactions_list_invalid, "USD"))
-    assert str(exc_info.value) == "Операции в заданной валюте не найдены"
+    assert exc_info.value.args[0] == "Операции в заданной валюте не найдены"
+
+
+def test_filter_by_currency_without_key(transactions_list_without_key):
+    with pytest.raises(KeyError) as exc_info:
+        list(filter_by_currency(transactions_list_without_key, "RUB"))
+    assert exc_info.value.args[0] == "Информация о валюте отсутствует"
 
 
 def test_filter_by_invalid_currency_empty(transactions_list_empty):
     with pytest.raises(ValueError) as exc_info:
-        list(filter_by_currency(transactions_list_empty, "USD"))
-    assert str(exc_info.value) == "Операции в заданной валюте не найдены"
+        list(filter_by_currency(transactions_list_empty, "RUB"))
+    assert str(exc_info.value) == "Список транзакций пуст"
 
 
 def test_transaction_descriptions(transactions_list):
@@ -45,9 +51,7 @@ def test_transaction_descriptions(transactions_list):
 
 
 def test_transaction_descriptions_empty(transactions_list_empty):
-    with pytest.raises(ValueError) as exc_info:
-        list(transaction_descriptions(transactions_list_empty))
-    assert str(exc_info.value) == "Нет транзакций"
+    assert list(transaction_descriptions(transactions_list_empty)) == []
 
 
 @pytest.mark.parametrize(
@@ -104,3 +108,18 @@ def test_card_gen_invalid_parameters():
     with pytest.raises(ValueError) as exc_info:
         list(card_number_generator(2, 1))
     assert str(exc_info.value) == "Ошибка: Start не должен превышать Stop"
+
+
+def test_filter_by_currency_with_xlsx_csv(csv_data_result):
+    gen = filter_by_currency(csv_data_result, "COP")
+    assert next(gen) == {
+        "amount": "29740",
+        "currency_code": "COP",
+        "currency_name": "Peso",
+        "date": "2020-12-06T23:00:58Z",
+        "description": "Перевод с карты на карту",
+        "from": "Discover 3172601889670065",
+        "id": "3598919",
+        "state": "EXECUTED",
+        "to": "Discover 0720428384694643",
+    }
